@@ -71,8 +71,7 @@ async function addStudent(first_name, last_name, email, enrollment_date){
 // Route to handle updating a student's email generically
 app.post('/updateEmail', async (req, res) => {
   try {
-    console.log("WWEEEEE ARREEEEE INNNN Post: ");
-    console.log("WE WILL PRINT: id: " + req.body.student_id + " and email: " + req.body.newEmail);
+    
     // Update the email of the specified student in the database
     await updateStudentEmail(req.body.student_id, req.body.newEmail);
 
@@ -88,7 +87,7 @@ async function updateStudentEmail(student_id, new_email){
     try {
     // Update the email of the specified student in the database
       const result = await pool.query('UPDATE students SET email = $1 WHERE student_id = $2 RETURNING *', [new_email, student_id]);
-      console.log("result: "+result);
+      
       return result.rows;
       } catch (error) {
         throw error;
