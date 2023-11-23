@@ -1,0 +1,244 @@
+//- doctype html
+//- html
+//-   head
+//-     title Students Database
+//-   body
+//-     h1 Students Database
+
+//-     button(id='getAllStudentsBtn') Get Students
+//-     button(id='addStudentBtn') Add Student
+//-     button(id='updateStudentEmailBtn') Update Student Email
+//-     button(id='deleteStudentBtn') Delete Student
+
+//-     // Display area for results
+//-     #resultContainer
+//-       // Results will be displayed here
+
+//- // Modal for adding a student
+//- #addStudentModal.modal
+//-   form(id='addStudentForm', action='/addStudent', method='post')
+//-     label(for='addFirstName') First Name:
+//-     input(type='text', id='addFirstName', name='first_name', required)
+//-     label(for='addLastName') Last Name:
+//-     input(type='text', id='addLastName', name='last_name', required)
+//-     label(for='addEmail') Email:
+//-     input(type='email', id='addEmail', name='email', required)
+//-     label(for='addEnrollmentDate') Enrollment Date:
+//-     input(type='date', id='addEnrollmentDate', name='enrollment_date', required)
+//-     button(type='submit') Add Student
+//-     button(type='button', onclick='closeModal()') Cancel
+
+//- // Modal for updating a student's email
+//- #updateStudentEmailModal.modal
+//-   form(id='updateStudentEmailForm', action='/updateStudent/:id', method='post')
+//-     label(for='updateEmail') New Email:
+//-     input(type='email', id='updateEmail', name='new_email', required)
+//-     button(type='submit') Update Email
+//-     button(type='button', onclick='closeModal()') Cancel
+
+
+//- script.
+//-   function openModal(modalId) {
+//-     var modal = document.getElementById(modalId);
+//-     modal.style.display = 'block';
+//-   }
+
+//-   function closeModal() {
+//-     var modals = document.querySelectorAll('.modal');
+//-     modals.forEach(function (modal) {
+//-       modal.style.display = 'none';
+//-     });
+//-   }
+
+//-   // Execute these when the page is ready
+//-   document.addEventListener('DOMContentLoaded', function() {
+//-     document.getElementById('getAllStudentsBtn').onclick = function() {
+//-       // Call the getAllStudents() function on the server and update the page
+//-       // (You'll need to use JavaScript fetch or another library to make a request to your server)
+//-     };
+
+//-     document.getElementById('addStudentBtn').onclick = function() {
+//-       openModal('addStudentModal');
+//-     };
+
+//-     document.getElementById('updateStudentEmailBtn').onclick = function() {
+//-       openModal('updateStudentEmailModal');
+//-     };
+
+//-     document.getElementById('deleteStudentBtn').onclick = function() {
+//-       // Call the deleteStudent() function on the server and update the page
+//-       // (You'll need to use JavaScript fetch or another library to make a request to your server)
+//-     };
+//-   });
+
+doctype html
+html
+  head 
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    
+  body
+    
+    
+    
+    h1 Students Database
+    
+        // Clear the errorMessage after displaying the alert
+       
+
+
+    // Create a dynamic table
+    table#studentsTable
+      thead
+        tr
+          th Student ID
+          th First Name
+          th Last Name
+          th Email
+          th Enrollment Date
+      tbody
+        each student in students
+          tr
+            td= student.student_id
+            td= student.first_name
+            td= student.last_name
+            td= student.email
+            td= student.enrollment_date
+    
+    form(action="/updateEmail", method="post")
+      label(for="student_id") Student ID          
+      input(type="text", name="student_id" ) 
+      br
+      label(for="newEmail") New Email    
+      input(type="text", name="newEmail") 
+      
+      br
+      input(type="submit", value="update email")
+
+
+    br
+    br
+    br
+    br
+    br
+
+    p Delete student id:
+    form(action="/deleteStudent", method="post")
+      input(type="text" name="student_id")
+      input(type="submit", value="Delete Student")
+
+    br
+    br
+    br
+    br
+    br
+
+    p Insert new Student: 
+    form(action="/addStudent", method="post")
+      label(for="first_name") First name          
+      input(type="text", name="first_name" ) 
+      br
+      label(for="last_name") Last name      
+      input(type="text", name="last_name") 
+      br
+      label(for="email") Email          
+      input(type="text", name="email" )
+      br
+      label(for="enrollment_date") Enrollment date      
+      input(type="date", name="enrollment_date") 
+      br
+      input(type="submit", value="Submit")
+
+    //script(src="/client.js")
+    
+  
+
+    
+    //- // Display area for results
+    //- #resultContainer
+    //-   // Results will be displayed here
+
+    //- // Modal for adding a student
+    //- #addStudentModal.modal
+    //-   form(id='addStudentForm', action='/addStudent', method='post')
+    //-     label(for='addFirstName') First Name:
+    //-     input(type='text', id='addFirstName', name='first_name', required)
+    //-     label(for='addLastName') Last Name:
+    //-     input(type='text', id='addLastName', name='last_name', required)
+    //-     label(for='addEmail') Email:
+    //-     input(type='email', id='addEmail', name='email', required)
+    //-     label(for='addEnrollmentDate') Enrollment Date:
+    //-     input(type='date', id='addEnrollmentDate', name='enrollment_date', required)
+    //-     button(type='submit') Add Student
+    //-     button(type='button', onclick='closeModal()') Cancel
+
+    //- // Modal for updating a student's email
+    //- #updateStudentEmailModal.modal
+    //-   form(id='updateStudentEmailForm', action='/updateStudent/:id', method='post')
+    //-     label(for='updateID') student ID
+    //-     label(for='updateEmail') New Email:
+    //-     input(type='email', id='updateEmail', name='new_email', required)
+    //-     button(type='submit') Update Email
+    //-     button(type='button', onclick='closeModal()') Cancel
+
+    //- script.
+    //-   // Function to get all students
+    //-   function getAllStudents() {
+    //-     // Make a GET request to the server to fetch all students
+    //-     fetch('/getAllStudents')
+    //-       .then(response => response.json())
+    //-       .then(data => {
+    //-         // Update the page with the list of students
+    //-         displayStudents(data);
+    //-       })
+    //-       .catch(error => console.error('Error fetching students:', error));
+    //-   }
+
+    
+    //-   function displayStudents(students) {
+    //-     var resultContainer = document.getElementById('resultContainer');
+    //-     resultContainer.innerHTML = ''; // Clear previous results
+
+    //-     // Create a table to display the students
+    //-     var table = document.createElement('table');
+    //-     table.border = '1';
+
+    //-     // Create table header
+    //-     var headerRow = table.insertRow();
+    //-     var headers = ['Student ID', 'First Name', 'Last Name', 'Email', 'Enrollment Date'];
+    //-     headers.forEach(headerText => {
+    //-       var header = document.createElement('th');
+    //-       header.textContent = headerText;
+    //-       headerRow.appendChild(header);
+    //-     });
+
+    //-     // Create table rows
+    //-     students.forEach(student => {
+    //-       var row = table.insertRow();
+    //-       Object.values(student).forEach(value => {
+    //-         var cell = row.insertCell();
+    //-         cell.textContent = value;
+    //-       });
+    //-     });
+
+    //-     resultContainer.appendChild(table);
+    //-   }
+
+       
+    //-   function openAddStudentModal() {
+    //-     var modal = document.getElementById('addStudentModal');
+    //-     modal.style.display = 'block';
+    //-   }
+
+    //-   // Function to open the modal for updating a student's email
+    //-   function openUpdateEmailModal() {
+    //-     var modal = document.getElementById('updateStudentEmailModal');
+    //-     modal.style.display = 'block';
+    //-   }
+
+    //-   // Function to close any open modal
+    //-   function closeModal() {
+    //-     var modals = document.querySelectorAll('.modal');
+    //-     modals.forEach(function (modal) {
+    //-       modal.style.display = 'none';
+    //-     });
+    //-   }
