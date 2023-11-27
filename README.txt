@@ -20,7 +20,7 @@ To set up the database:
 Stept to compile and run the application:
 
 1. download the code from github and open the folder in vs code or other ide
-2. open a terminal where the folder is, and type "npm install" to install the dependencies that the project requires
+2. open a terminal where the folder is, and type "npm install pg", "npm install pug", "npm install express", "npm install" to install all the dependencies that the project requires
 3. Once downloaded, type "npm start" to start the application
 4. in the terminal it will show the link where the server is running. press Ctrl + right click to go to the website
 5. The application is now running. you will see the table of students populated with student information if you followed steps 1 to 4 correctly
